@@ -3,6 +3,7 @@ package com.santo.shiro;
 import com.baomidou.mybatisplus.mapper.EntityWrapper;
 import com.santo.base.Constant;
 import com.santo.config.SpringContextBean;
+import com.santo.entity.Menu;
 import com.santo.entity.Role;
 import com.santo.exception.UnauthorizedException;
 import com.santo.entity.User;
@@ -11,6 +12,7 @@ import com.santo.service.IMenuService;
 import com.santo.service.IRoleService;
 import com.santo.service.IUserService;
 import com.santo.service.IUserToRoleService;
+import com.santo.util.ComUtil;
 import com.santo.util.JWTUtil;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -24,6 +26,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -64,13 +67,12 @@ public class MyRealm extends AuthorizingRealm {
         UserToRole userToRole = userToRoleService.selectByUserNo(user.getUserNo());
 
         SimpleAuthorizationInfo simpleAuthorizationInfo = new SimpleAuthorizationInfo();
-        ArrayList<String> pers = new ArrayList<>();
         Set<String> roleNameSet = new HashSet<>();
         Role role = roleService.selectOne(new EntityWrapper<Role>().eq("role_code", userToRole.getRoleCode()));
         roleNameSet.add(role.getRoleName());
         //添加控制角色级别的权限
         simpleAuthorizationInfo.addRoles(roleNameSet);
-        /*
+        /**/
         //控制菜单级别按钮  类中用@RequiresPermissions("user:list") 对应数据库中code字段来控制controller
         ArrayList<String> pers = new ArrayList<>();
         List<Menu> menuList = menuService.findMenuByRoleCode(userToRole.getRoleCode());
@@ -81,7 +83,7 @@ public class MyRealm extends AuthorizingRealm {
         }
         Set<String> permission = new HashSet<>(pers);
         simpleAuthorizationInfo.addStringPermissions(permission);
-        */
+
 
         return simpleAuthorizationInfo;
     }

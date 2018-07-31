@@ -17,7 +17,7 @@ import com.santo.service.IUserService;
 import com.santo.service.impl.MyWebSocketService;
 import com.santo.util.ComUtil;
 import com.santo.util.SmsSendUtil;
-import com.santo.util.StringUtil;
+import com.santo.util.ValidatorUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -50,7 +50,7 @@ public class LoginController {
 
     @ApiOperation(value="手机密码登录", notes="body体参数,不需要Authorization",produces = "application/json")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "requestJson", value = "{\"mobile\":\"17765071662\",\"passWord\":\"123456\"}"
+            @ApiImplicitParam(name = "requestJson", value = "{\"mobile\":\"17788888888\",\"passWord\":\"123456\"}"
                     , required = true, dataType = "String",paramType="body")
     })
     @PostMapping("/login")
@@ -60,7 +60,7 @@ public class LoginController {
             @ValidationParam("mobile,passWord")@RequestBody JSONObject requestJson) throws Exception{
         //由于 @ValidationParam注解已经验证过mobile和passWord参数，所以可以直接get使用没毛病。
         String mobile = requestJson.getString("mobile");
-        if(!StringUtil.checkMobileNumber(mobile)){
+        if(!ValidatorUtil.checkMobileNumber(mobile)){
             return new PublicResult<>(PublicResultConstant.MOBILE_ERROR, null);
         }
         User user = userService.selectOne(new EntityWrapper<User>().where("mobile = {0} and status = 1",mobile));
@@ -70,13 +70,13 @@ public class LoginController {
         Map<String, Object> result = userService.getLoginUserAndMenuInfo(user);
         //测试websocket用户登录给管理员发送消息的例子  前端代码参考父目录下WebSocketDemo.html
         noticeService.insertByThemeNo("themeNo-cwr3fsxf233edasdfcf2s3","13888888888");
-        MyWebSocketService.sendMessageTo(JSONObject.toJSONString(user),"13888888888");
+        MyWebSocketService.sendMessageTo(JSONObject.toJSONString(user),"17821069768");
         return new PublicResult<>(PublicResultConstant.SUCCESS, result);
     }
 
     @ApiOperation(value="短信验证码登录", notes="body体参数,不需要Authorization",produces = "application/json")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "requestJson", value = "{\"mobile\":\"17765071662\",\"captcha\":\"5780\"}"
+            @ApiImplicitParam(name = "requestJson", value = "{\"mobile\":\"17788888888\",\"captcha\":\"5780\"}"
                     , required = true, dataType = "String",paramType="body")
     })
     @PostMapping("/login/captcha")
@@ -85,7 +85,7 @@ public class LoginController {
     public PublicResult<Map<String, Object>> loginBycaptcha(
             @ValidationParam("mobile,captcha")@RequestBody JSONObject requestJson) throws Exception{
         String mobile = requestJson.getString("mobile");
-        if(!StringUtil.checkMobileNumber(mobile)){
+        if(!ValidatorUtil.checkMobileNumber(mobile)){
             return new PublicResult<>(PublicResultConstant.MOBILE_ERROR, null);
         }
         User user = userService.getUserByMobile(mobile);
@@ -117,7 +117,7 @@ public class LoginController {
 
     @ApiOperation(value="手机验证码注册", notes="body体参数,不需要Authorization",produces = "application/json")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "requestJson", value = "{\"userName\":\"liugh\",\"mobile\":\"17765071662\",</br>" +
+            @ApiImplicitParam(name = "requestJson", value = "{\"userName\":\"lisi\",\"mobile\":\"17788888888\",</br>" +
                     "\"captcha\":\"5780\",\"passWord\":\"123456\",</br>\"rePassWord\":\"123456\",\"job\":\"java开发\"," +
                     "</br>\"unit(可不传)\":\"xxx公司\"}"
                     , required = true, dataType = "String",paramType="body")
@@ -129,7 +129,7 @@ public class LoginController {
                                        @RequestBody JSONObject requestJson) {
         //可直接转为java对象,简化操作,不用再set一个个属性
         User userRegister = requestJson.toJavaObject(User.class);
-        if(!StringUtil.checkMobileNumber(userRegister.getMobile())){
+        if(!ValidatorUtil.checkMobileNumber(userRegister.getMobile())){
             return new PublicResult<>(PublicResultConstant.MOBILE_ERROR, null);
         }
         if (!userRegister.getPassWord().equals(requestJson.getString("rePassWord"))) {
@@ -153,7 +153,7 @@ public class LoginController {
 
     @ApiOperation(value="忘记密码", notes="body体参数,不需要Authorization",produces = "application/json")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "requestJson", value = "{\"mobile\":\"17765071662\",\"captcha\":\"5780\",</br>" +
+            @ApiImplicitParam(name = "requestJson", value = "{\"mobile\":\"17788888888\",\"captcha\":\"5780\",</br>" +
                     "\"passWord\":\"123456\",\"rePassWord\":\"123456\"}"
                     , required = true, dataType = "String",paramType="body")
     })
@@ -162,7 +162,7 @@ public class LoginController {
     public PublicResult<String> resetPassWord (@ValidationParam("mobile,captcha,passWord,rePassWord")
                                                @RequestBody JSONObject requestJson ) throws Exception{
         String mobile = requestJson.getString("mobile");
-        if(!StringUtil.checkMobileNumber(mobile)){
+        if(!ValidatorUtil.checkMobileNumber(mobile)){
             return new PublicResult<>(PublicResultConstant.MOBILE_ERROR, null);
         }
         if (!requestJson.getString("passWord").equals(requestJson.getString("rePassWord"))) {

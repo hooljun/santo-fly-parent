@@ -11,7 +11,7 @@ import com.santo.service.ISmsVerifyService;
 import com.santo.util.ComUtil;
 import com.santo.util.GenerationSequenceUtil;
 import com.santo.util.SmsSendUtil;
-import com.santo.util.StringUtil;
+import com.santo.util.ValidatorUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -49,7 +49,7 @@ public class SmsVerifyController {
     @Pass
     @Log(description = "获取短信验证码接口:/smsVerify/{smsType}/{mobile}")
    public PublicResult<SmsVerify> getCaptcha (@PathVariable String smsType,@PathVariable String mobile) throws Exception{
-        if(!StringUtil.checkMobileNumber(mobile)){
+        if(!ValidatorUtil.checkMobileNumber(mobile)){
             return new PublicResult<>(PublicResultConstant.MOBILE_ERROR, null);
         }
         String randNum = GenerationSequenceUtil.getRandNum(4);
@@ -76,7 +76,7 @@ public class SmsVerifyController {
     @Pass
     public PublicResult<Boolean> captchaCheck (@RequestParam String smsType,
             @RequestParam String mobile ,@RequestParam String captcha) throws Exception{
-        if(!StringUtil.checkMobileNumber(mobile)){
+        if(!ValidatorUtil.checkMobileNumber(mobile)){
             return new PublicResult<>(PublicResultConstant.MOBILE_ERROR, false);
         }
         List<SmsVerify> smsVerifies = smsVerifyService.getByMobileAndCaptchaAndType(mobile,

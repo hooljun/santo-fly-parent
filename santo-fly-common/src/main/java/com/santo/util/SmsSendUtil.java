@@ -31,12 +31,12 @@ public class SmsSendUtil {
     /**
      * 用户平台API账号(非登录账号,示例:N1234567)
      */
-    private static final String ACCOUNT = "*****";
+    private static final String ACCOUNT = "N7345612";
 
     /**
      * 用户平台API密码(非登录密码)
      */
-    private static final String PASSWORD = "*****";
+    private static final String PASSWORD = "miaomiao5109..";
 
 
     private static final String REPORT = "true";
@@ -189,6 +189,6 @@ public class SmsSendUtil {
     }
 
     public static void main(String[] args) throws BusinessException{
-         sendMessage("17765071662", "我试试请求，看一看结果");
+         sendMessage("17820169768", "我试试请求，看一看结果");
     }
 }

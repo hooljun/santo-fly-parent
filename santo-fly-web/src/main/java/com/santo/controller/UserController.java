@@ -16,11 +16,12 @@ import com.santo.service.ISmsVerifyService;
 import com.santo.service.IUserService;
 import com.santo.util.ComUtil;
 import com.santo.util.SmsSendUtil;
-import com.santo.util.StringUtil;
+import com.santo.util.ValidatorUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.shiro.authz.annotation.Logical;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +62,7 @@ public class UserController {
     public PublicResult<String> resetMobile(@CurrentUser User currentUser,
                                             @ValidationParam("newMobile,captcha")@RequestBody JSONObject requestJson ){
         String newMobile = requestJson.getString("newMobile");
-        if(!StringUtil.checkMobileNumber(newMobile)){
+        if(!ValidatorUtil.checkMobileNumber(newMobile)){
             return new PublicResult<>(PublicResultConstant.MOBILE_ERROR, null);
         }
         List<SmsVerify> smsVerifies = smsVerifyService.getByMobileAndCaptchaAndType(newMobile,
@@ -133,7 +134,7 @@ public class UserController {
     }
 
     @GetMapping(value = "/pageList")
-//    @RequiresPermissions(value = {"user:list"})
+    @RequiresPermissions(value = {"user:list"})
     public PublicResult findList(@RequestParam(name = "pageIndex", defaultValue = "1", required = false) Integer pageIndex,
                                  @RequestParam(name = "pageSize", defaultValue = "10", required = false) Integer pageSize,
                                  @RequestParam(value = "userName", defaultValue = "",required = false) String userName) {

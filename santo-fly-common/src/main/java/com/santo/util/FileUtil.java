@@ -491,7 +491,7 @@ public class FileUtil {
      * @return
      */
     public static File[] getFiles(String str) {
-        File dir = new File(StringUtil.utf8Decoding(str));
+        File dir = new File(ValidatorUtil.utf8Decoding(str));
         File[] result = null;
         if (dir.isDirectory()) {
             result = dir.listFiles();
@@ -507,7 +507,7 @@ public class FileUtil {
      * @return 顶层文件夹路径
      */
     public static String getTopClassPath(Class<?> clazz) {
-        String path = StringUtil.utf8Decoding(clazz.getResource("/").getPath());
+        String path = ValidatorUtil.utf8Decoding(clazz.getResource("/").getPath());
         return path;
     }
 
@@ -531,7 +531,7 @@ public class FileUtil {
      * @return
      */
     public static String getCurrPath(Class<?> clazz) {
-        return StringUtil.utf8Decoding(clazz.getResource("/").getPath() + clazz.getName().replace(".", File.separator));
+        return ValidatorUtil.utf8Decoding(clazz.getResource("/").getPath() + clazz.getName().replace(".", File.separator));
     }
 
     /**
@@ -542,7 +542,7 @@ public class FileUtil {
      */
     public static boolean createDir(String path) {
         boolean flag = false;
-        File file = new File(StringUtil.utf8Decoding(path));
+        File file = new File(ValidatorUtil.utf8Decoding(path));
         if (!file.exists()) {
             if (!file.isDirectory()) {
                 flag = file.mkdir();
@@ -574,7 +574,7 @@ public class FileUtil {
      */
     public static boolean createFile(String path, boolean isDelete) throws IOException {
         // 加载文件
-        File file = new File(StringUtil.utf8Decoding(path));
+        File file = new File(ValidatorUtil.utf8Decoding(path));
         // 文件是否创建成功
         boolean flag = true;
         // 判断文件是否存在
@@ -604,7 +604,7 @@ public class FileUtil {
     public static boolean moveFileTo(File oldFile, String newDir) {
         StringBuilder sb = new StringBuilder(newDir);
         sb.append(File.separator).append(oldFile.getName());
-        File toDir = new File(StringUtil.utf8Decoding(sb.toString()));
+        File toDir = new File(ValidatorUtil.utf8Decoding(sb.toString()));
         boolean flag = false;
         if (!toDir.exists()) {
             flag = oldFile.renameTo(toDir);
@@ -657,7 +657,7 @@ public class FileUtil {
             }
         }
 
-        return StringUtil.utf8Decoding(result) + File.separator;
+        return ValidatorUtil.utf8Decoding(result) + File.separator;
     }
 
     public static String getParent(String path, int floor) {

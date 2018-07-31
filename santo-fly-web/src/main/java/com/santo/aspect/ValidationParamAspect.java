@@ -4,7 +4,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.santo.annotation.ValidationParam;
 import com.santo.exception.ParamJsonException;
 import com.santo.util.ComUtil;
-import com.santo.util.StringUtil;
+import com.santo.util.ValidatorUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.RequestAttributes;
@@ -23,7 +23,7 @@ public class ValidationParamAspect implements AspectApi{
     @Override
     public Object doHandlerAspect(Object [] obj ,ProceedingJoinPoint pjp, Method method,boolean isAll) throws Throwable{
        //获取注解的value值返回
-        String validationParamValue = StringUtil.getMethodAnnotationOne(method,ValidationParam.class.getSimpleName());
+        String validationParamValue = ValidatorUtil.getMethodAnnotationOne(method,ValidationParam.class.getSimpleName());
         RequestAttributes ra = RequestContextHolder.getRequestAttributes();
         ServletRequestAttributes sra = (ServletRequestAttributes) ra;
         HttpServletRequest request = sra.getRequest();

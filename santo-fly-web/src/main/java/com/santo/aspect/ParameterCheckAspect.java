@@ -6,7 +6,7 @@ import com.santo.annotation.ParamXssPass;
 import com.santo.annotation.ValidationParam;
 import com.santo.base.Constant;
 import com.santo.util.ComUtil;
-import com.santo.util.StringUtil;
+import com.santo.util.ValidatorUtil;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
@@ -40,7 +40,7 @@ public class ParameterCheckAspect {
         if(isParamXssPassEmpty){
             args = handlerRequstParam(pjp);
         }
-        boolean isValidationParamEmpty = ComUtil.isEmpty(StringUtil.getMethodAnnotationOne(method, ValidationParam.class.getSimpleName()));
+        boolean isValidationParamEmpty = ComUtil.isEmpty(ValidatorUtil.getMethodAnnotationOne(method, ValidationParam.class.getSimpleName()));
         if (!isLogEmpty && isValidationParamEmpty) {
             AspectHandler aspectHandler = new RecordLogOperate();
             return   aspectHandler.doAspectHandler(pjp,args,method,false);
