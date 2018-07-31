@@ -64,3 +64,13 @@ logging:
     com.santo.mapper: debug
   path: logs/
   file: santo-fly.log
+
+#swagger:
+#  enabled: ${SWAGGER_ENABLED:true}
+#  host:
+#  title: 认证
+#  description: 认证
+#  contact:
+#    name: zhangyanlong
+#    email: zyl613@163.com
+#  base-package: com.santo.controller

@@ -47,7 +47,7 @@ public class SwaggerConfig {
 
     private ApiInfo apiInfo1() {
         return new ApiInfoBuilder()
-                .title("santo-fly-parent的Server端 APIs")
+                .title("Santo-Fly Server端 APIs")
                 .contact("huliangjun")
                 .version("v0.01")
                 .build();
