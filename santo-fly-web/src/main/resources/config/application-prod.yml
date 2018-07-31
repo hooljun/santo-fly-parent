@@ -1,7 +1,7 @@
-#\u4F7F\u7528\u7AEF\u53E3
+#使用端口
 server:
   port: 9527
-  #\u8BBE\u7F6E\u7EDF\u4E00\u524D\u7F00
+  #设置统一前缀
   context-path: /api/v1
 
 banner:
@@ -35,20 +35,20 @@ spring:
     filters: stat,wall,log4j
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
     useGlobalDataSourceStat: true
-  #redis\u6570\u636E\u5E93\u7684\u7D22\u5F15\uFF0C\u9ED8\u8BA4\u4E3A0
+  #redis数据库的索引，默认为0
   redis:
     database: 0
     host: 127.0.0.1
     #password=
     port: 6379
-    #\u6700\u5927\u7A7A\u95F2\u94FE\u63A5\u6570
+    #最大空闲链接数
     pool:
       max-idle: 8
-      #\u6700\u5C0F\u7A7A\u95F2\u8FDE\u63A5\u6570\u3000\u3000
+      #最小空闲连接数　　
       min-idle: 0
-      #\u8FDE\u63A5\u6C60\u6700\u5927\u8FDE\u63A5\u6570\uFF0C\u8D1F\u6570\u8868\u793A\u65E0\u6700\u5927\u8FDE\u63A5\u6570
+      #连接池最大连接数，负数表示无最大连接数
       max-active: 8
-      #\u8FDE\u63A5\u6C60\u6700\u5927\u963B\u585E\u7B49\u5F85\u65F6\u95F4\uFF0C\u8D1F\u6570\u8868\u793A\u6CA1\u6709
+      #连接池最大阻塞等待时间，负数表示没有
       max-wait: -1
 
 mybatis-plus:
