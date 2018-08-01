@@ -68,9 +68,7 @@ public class LoginController {
             return new PublicResult<>(PublicResultConstant.INVALID_USERNAME_PASSWORD, null);
         }
         Map<String, Object> result = userService.getLoginUserAndMenuInfo(user);
-        //测试websocket用户登录给管理员发送消息的例子  前端代码参考父目录下WebSocketDemo.html
         noticeService.insertByThemeNo("themeNo-cwr3fsxf233edasdfcf2s3","13888888888");
-        MyWebSocketService.sendMessageTo(JSONObject.toJSONString(user),"17821069768");
         return new PublicResult<>(PublicResultConstant.SUCCESS, result);
     }
 

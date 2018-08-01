@@ -18,6 +18,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import springfox.documentation.annotations.ApiIgnore;
 
 import java.util.List;
 
@@ -32,6 +33,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/smsVerify")
 @Api(description="短信模块")
+@ApiIgnore
 public class SmsVerifyController {
 
     @Autowired
